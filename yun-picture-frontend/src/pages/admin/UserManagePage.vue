@@ -1,18 +1,21 @@
 <template>
-  <div id="userManage">
+  <div id="userManagePage">
     <!-- 搜索表单 -->
-    <a-form layout="inline" :model="searchParams" @finish="doSearch">
-      <a-form-item label="账号">
-        <a-input v-model:value="searchParams.userAccount" placeholder="输入账号" allowClear />
-      </a-form-item>
-      <a-form-item label="用户名">
-        <a-input v-model:value="searchParams.userName" placeholder="输入用户名" allowClear />
-      </a-form-item>
-      <a-form-item>
-        <a-button type="primary" html-type="submit">搜索</a-button>
-      </a-form-item>
-    </a-form>
-    <br />
+    <div class="search-form-container">
+      <a-form :model="searchParams" @finish="doSearch" class="custom-form">
+        <div class="form-row">
+          <a-form-item label="账号" class="form-item">
+            <a-input v-model:value="searchParams.userAccount" placeholder="输入账号" allowClear />
+          </a-form-item>
+          <a-form-item label="用户名" class="form-item">
+            <a-input v-model:value="searchParams.userName" placeholder="输入用户名" allowClear />
+          </a-form-item>
+          <a-form-item class="form-item submit-item">
+            <a-button type="primary" html-type="submit">搜索</a-button>
+          </a-form-item>
+        </div>
+      </a-form>
+    </div>
 
     <!-- 用户管理表格 -->
     <a-table
@@ -50,7 +53,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { message } from 'ant-design-vue'
+import { message, Modal } from 'ant-design-vue'
 import { listUserVoByPageUsingPost } from '@/api/userController'
 import { onMounted, ref, reactive, computed } from 'vue'
 import dayjs from 'dayjs'
@@ -150,17 +153,93 @@ const doSearch = () => {
 
 //删除函数
 const doDelete = async (id: number) => {
-  // 确认删除
   if (!id) {
     return
   }
-  const res = await deleteUserUsingPost({ id })
-  if (res.data.code === 0) {
-    message.success('删除成功')
-    //刷新数据
-    fetchData()
-  } else {
-    message.error('删除失败，' + res.data.message)
-  }
+  // 添加确认对话框
+  Modal.confirm({
+    title: '确认删除',
+    content: '确定要删除该用户吗？此操作不可恢复。',
+    okText: '确认',
+    cancelText: '取消',
+    onOk: async () => {
+      try {
+        const res = await deleteUserUsingPost({ id })
+        if (res.data.code === 0) {
+          message.success('删除成功')
+          //刷新数据
+          fetchData()
+        } else {
+          message.error('删除失败，' + res.data.message)
+        }
+      } catch (error: any) {
+        message.error('删除失败，' + error.message)
+      }
+    },
+  })
 }
 </script>
+
+<style scoped>
+#userManagePage {
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.search-form-container {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.custom-form {
+  width: 100%;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-end;
+}
+
+.form-item {
+  flex: 1;
+  min-width: 200px;
+}
+
+.submit-item {
+  flex: 0 0 auto;
+}
+
+/* 调整表单内部间距 */
+:deep(.ant-form-item) {
+  margin-bottom: 0;
+}
+
+:deep(.ant-input) {
+  width: 100%;
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+  #userManagePage {
+    padding: 12px;
+  }
+
+  .search-form-container {
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+
+  .form-row {
+    gap: 12px;
+  }
+
+  .form-item {
+    flex: 1 0 100%;
+  }
+}
+</style>

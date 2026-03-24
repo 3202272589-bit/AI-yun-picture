@@ -1,24 +1,21 @@
 <template>
-<div id="basicLayout">
- <a-layout style="min-height: 100vh">
+  <div id="basicLayout">
+    <a-layout style="min-height: 100vh; display: flex; flex-direction: column">
       <a-layout-header class="header">
-       <GlobalHeader/>
+        <GlobalHeader />
       </a-layout-header>
-      <a-layout-content>
-        <router-view/>
+      <a-layout-content style="flex: 1; padding: 0 20px 80px">
+        <router-view />
       </a-layout-content>
       <a-layout-footer class="footer">
-        <a href="https://github.com/3202272589-bit/AI-------" target="_blank">
-          AI智能云图库
-        </a>
+        <a href="https://github.com/3202272589-bit/AI-------" target="_blank"> AI智能云图库 </a>
       </a-layout-footer>
     </a-layout>
-</div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import GlobalHeader from '@/components/GlobalHeader.vue';
-
+import GlobalHeader from '@/components/GlobalHeader.vue'
 </script>
 
 <style scoped>
@@ -38,10 +35,7 @@ import GlobalHeader from '@/components/GlobalHeader.vue';
 #basicLayout .footer {
   background: #efefef;
   padding: 16px;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
   text-align: center;
+  margin-top: auto;
 }
 </style>

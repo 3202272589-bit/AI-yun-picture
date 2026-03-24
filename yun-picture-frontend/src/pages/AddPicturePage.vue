@@ -3,8 +3,16 @@
     <h2 style="margin-bottom: 16px">
       {{ route.query?.id ? '编辑图片' : '创建图片' }}
     </h2>
-    <!-- 图片上传组件 -->
-    <PictureUpload :picture="picture" :onSuccess="onSuccess" />
+    <a-tabs v-model:activeKey="uploadType">
+      <a-tab-pane key="file" tab="文件上传">
+        <!-- 图片上传组件 -->
+        <PictureUpload :picture="picture" :onSuccess="onSuccess" />
+      </a-tab-pane>
+      <a-tab-pane key="url" tab="URL上传">
+        <!-- 图片URL上传组件 -->
+        <UrlPictureUpload :picture="picture" :onSuccess="onSuccess" />
+      </a-tab-pane>
+    </a-tabs>
     <!-- 图片信息表单 -->
     <a-form
       v-if="picture"
@@ -55,9 +63,11 @@ import message from 'ant-design-vue/es/message'
 import { editPictureUsingPost, getPictureVoByIdUsingGet } from '@/api/pictureController'
 import { useRouter, useRoute } from 'vue-router'
 import { listPictureTagCategoryUsingGet } from '@/api/pictureController'
+import UrlPictureUpload from '@/components/UrlPictureUpload.vue'
 
 const picture = ref<API.PictureVO>()
 const pictureForm = reactive<API.PictureEditRequest>({})
+const uploadType = ref<'file' | 'url'>('file')
 
 /**
  * 图片上传成功
@@ -120,6 +130,7 @@ const getTagCategoryOptions = async () => {
 
 onMounted(() => {
   getTagCategoryOptions()
+  getOldPicture()
 })
 
 const route = useRoute()
@@ -142,10 +153,6 @@ const getOldPicture = async () => {
     }
   }
 }
-
-onMounted(() => {
-  getOldPicture()
-})
 </script>
 
 <style scoped>
