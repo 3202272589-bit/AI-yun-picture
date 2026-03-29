@@ -1,6 +1,6 @@
 <template>
   <div id="addSpacePage">
-    <h2 style="margin-bottom: 16px"></h2>
+    <h2 style="margin-bottom: 16px">{{ space ? '编辑空间' : '创建空间' }}</h2>
     <!-- 空间信息表单 -->
     <a-form name="SpaceForm" layout="vertical" :model="spaceForm" @finish="handleSubmit">
       <a-form-item label="名称" name="spaceName">
@@ -27,7 +27,10 @@
         <a href="https://github.com/3202272589-bit/AI-------" target="_blank">管理员</a>
       </a-typography-paragraph>
       <a-typography-paragraph v-for="spaceLevel in spaceLevelList">
-        {{ spaceLevel.text }}: 大小 {{ formatSize(spaceLevel.maxSize) }}, 数量
+        <a-tag :color="SPACE_LEVEL_COLOR[spaceLevel.value]">{{
+          SPACE_LEVEL_MAP[spaceLevel.value]
+        }}</a-tag
+        >: 大小 {{ formatSize(spaceLevel.maxSize) }}, 数量
         {{ spaceLevel.maxCount }}
       </a-typography-paragraph>
     </a-card>
@@ -39,7 +42,7 @@ import { ref, reactive, onMounted } from 'vue'
 import message from 'ant-design-vue/es/message'
 import { addSpaceUsingPost, getSpaceVoByIdUsingGet } from '@/api/spaceController'
 import { useRouter, useRoute } from 'vue-router'
-import { SPACE_LEVEL_OPTIONS } from '@/constants/space'
+import { SPACE_LEVEL_OPTIONS, SPACE_LEVEL_COLOR, SPACE_LEVEL_MAP } from '@/constants/space'
 import { listSpaceLevelUsingGet, updateSpaceUsingPost } from '@/api/spaceController'
 import { formatSize } from '@/utils/index'
 

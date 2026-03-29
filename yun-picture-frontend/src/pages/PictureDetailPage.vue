@@ -117,6 +117,7 @@ const doEdit = () => {
     path: '/add_Picture',
     query: {
       id: picture.value.id,
+      spaceId: picture.value.spaceId,
     },
   })
 }

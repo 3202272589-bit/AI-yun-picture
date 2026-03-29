@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { listSpaceVoByPageUsingPost } from '@/api/spaceController'
 import { message } from 'ant-design-vue'
 import { useLoginUserStore } from '@/stores/useLoginUserStore'
@@ -14,7 +14,6 @@ import { onMounted } from 'vue'
 const loginUserStore = useLoginUserStore()
 
 const router = useRouter()
-const route = useRoute()
 
 //检查用户是否有个人空间
 const checkUserSpace = async () => {

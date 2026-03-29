@@ -53,7 +53,12 @@ const doMenuClick = ({ key }: { key: string }) => {
 const current = ref<string[]>([])
 //监听路由变化，更新当前高亮的菜单栏
 router.afterEach((to) => {
-  current.value = [to.path]
+  if (to.path.startsWith('/space/')) {
+    // 当访问空间详情页时，高亮"我的空间"菜单项
+    current.value = ['/my_space']
+  } else {
+    current.value = [to.path]
+  }
 })
 </script>
 

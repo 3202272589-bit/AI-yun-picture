@@ -42,7 +42,11 @@
     >
       <template #bodyCell="{ column, record }">
         <template v-if="column.dataIndex === 'spaceLevel'">
-          <div>空间级别：{{ SPACE_LEVEL_MAP[record.spaceLevel] }}</div>
+          <div>
+            空间级别：<a-tag :color="SPACE_LEVEL_COLOR[record.spaceLevel]">{{
+              SPACE_LEVEL_MAP[record.spaceLevel]
+            }}</a-tag>
+          </div>
         </template>
         <template v-if="column.dataIndex === 'spaceUseInfo'">
           <div>大小：{{ formatSize(record.totalSize) }} / {{ formatSize(record.maxSize) }}</div>
@@ -72,7 +76,7 @@ import { listSpaceByPageUsingPost } from '@/api/spaceController'
 import { onMounted, ref, reactive, computed } from 'vue'
 import dayjs from 'dayjs'
 import { deleteSpaceUsingPost } from '@/api/spaceController'
-import { SPACE_LEVEL_MAP, SPACE_LEVEL_OPTIONS } from '@/constants/space'
+import { SPACE_LEVEL_MAP, SPACE_LEVEL_OPTIONS, SPACE_LEVEL_COLOR } from '@/constants/space'
 import { formatSize } from '@/utils/index'
 
 const columns = [

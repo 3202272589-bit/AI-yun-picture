@@ -52,7 +52,7 @@
         </template>
         <template v-if="column.dataIndex === 'tags'">
           <a-space>
-            <!-- 标签获取 -->>
+            <!-- 标签获取 -->
             <a-tag v-for="tag in JSON.parse(record.tags || '[]')" :key="tag">
               {{ tag }}
             </a-tag>
@@ -151,6 +151,11 @@ const columns = [
   {
     title: '用户 id',
     dataIndex: 'userId',
+    width: 80,
+  },
+  {
+    title: '空间 id',
+    dataIndex: 'spaceId',
     width: 80,
   },
   {
