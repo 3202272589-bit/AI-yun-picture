@@ -11,7 +11,9 @@
         </a-layout-content>
       </a-layout>
       <a-layout-footer class="footer">
-        <a href="https://github.com/3202272589-bit/AI-------" target="_blank"> AI智能云图库 </a>
+        <a href="https://github.com/3202272589-bit/AI-yun-picture" target="_blank">
+          AI智能云图库
+        </a>
       </a-layout-footer>
     </a-layout>
   </div>
