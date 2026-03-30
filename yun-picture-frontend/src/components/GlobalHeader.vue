@@ -96,7 +96,7 @@ const originItems = [
     key: 'others',
     label: h(
       'a',
-      { href: 'https://github.com/3202272589-bit/AI-------', target: '_blank' },
+      { href: 'https://github.com/3202272589-bit/AI-yun-picture', target: '_blank' },
       '项目地址',
     ),
     title: '项目地址',
