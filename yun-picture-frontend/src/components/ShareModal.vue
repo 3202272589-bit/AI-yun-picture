@@ -15,6 +15,7 @@
 import { ref } from 'vue'
 
 interface Props {
+  title: string
   link: string
 }
 

@@ -65,7 +65,7 @@
               >免费下载</a-button
             >
             <a-button :icon="h(ShareAltOutlined)" type="primary" ghost @click="doShare">
-              <ShareModal ref="shareModalRef" :link="shareLink" />
+              分享
             </a-button>
             <a-button v-if="canEdit" :icon="h(EditOutlined)" type="default" @click="doEdit">
               编辑
@@ -77,6 +77,7 @@
         </a-card>
       </a-col>
     </a-row>
+    <ShareModal ref="shareModalRef" :link="shareLink" />
   </div>
 </template>
 

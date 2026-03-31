@@ -59,9 +59,6 @@
               <a-option value=".png">.png</a-option>
             </a-select>
           </a-form-item>
-          <a-form-item label="按颜色搜索">
-            <color-picker format="hex" :pureColorChange="onColorChange" :loading="loading" />
-          </a-form-item>
           <a-form-item class="form-item submit-item">
             <a-space>
               <a-button type="primary" html-type="submit" style="width: 96px" @click="doSearch"
@@ -80,10 +77,6 @@ import { reactive, ref, onMounted } from 'vue'
 import dayjs from 'dayjs'
 import { message } from 'ant-design-vue'
 import { listPictureTagCategoryUsingGet } from '@/api/pictureController'
-import { ColorPicker } from 'vue3-colorpicker'
-import 'vue3-colorpicker/style.css'
-import { searchPictureByColorUsingPost } from '@/api/pictureController'
-const loading = ref(true)
 
 interface Props {
   onSearch: (searchParams: API.PictureQueryRequest) => void
@@ -162,23 +155,6 @@ const getTagCategoryOptions = async () => {
   } else {
     message.error('获取标签和分类失败' + res.data.message)
   }
-}
-
-//按照颜色搜索
-const onColorChange = async (color: string) => {
-  loading.value = true
-  const res = await searchPictureByColorUsingPost({
-    picColor: color,
-    spaceId: props.id,
-  })
-  if (res.data.code === 0 && res.data.data) {
-    const data = res.data.data ?? []
-    dataList.value = data
-    total.value = res.data.length
-  } else {
-    message.error('按颜色搜索失败' + res.data.message)
-  }
-  loading.value = false
 }
 
 onMounted(() => {
