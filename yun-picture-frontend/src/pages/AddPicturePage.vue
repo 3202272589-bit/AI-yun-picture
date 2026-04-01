@@ -25,7 +25,12 @@
         >
       </a-space>
     </div>
-    <ImageCropper ref="imageCropperRef" :picture="picture" :onSuccess="onCropSuccess" />
+    <ImageCropper
+      ref="imageCropperRef"
+      :picture="picture"
+      :spaceId="spaceId"
+      :onSuccess="onCropSuccess"
+    />
     <!-- 图片扩图组件 -->
     <ImageOutPainting
       :picture="picture"

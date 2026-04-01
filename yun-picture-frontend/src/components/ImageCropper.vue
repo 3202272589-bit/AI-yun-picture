@@ -33,18 +33,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { message } from 'ant-design-vue'
 import { uploadPictureUsingPost } from '@/api/pictureController'
 
 interface Props {
-  imageUrl?: string
   picture?: API.PictureVO
   spaceId?: number
   onSuccess?: (newPicture: API.PictureVO) => void
 }
 
 const props = defineProps<Props>()
+
+// 从 picture 中获取图片 URL
+const imageUrl = computed(() => props.picture?.url || '')
 
 // 编辑器组件的引用
 const cropperRef = ref()
@@ -71,7 +73,7 @@ const handleConfirm = () => {
   cropperRef.value.getCropBlob((blob: Blob) => {
     // blob 为已裁切的文件
     const fileName = (props.picture?.name || 'image') + '.png'
-    const file = new File([blob], fileName, { type: 'blob.type' })
+    const file = new File([blob], fileName, { type: blob.type })
     //上传图片
     handleUpload({ file })
   })

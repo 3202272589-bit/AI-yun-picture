@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onUnmounted } from 'vue'
 import { message } from 'ant-design-vue'
 import {
   createPictureOutPaintingTaskUsingPost,
@@ -92,14 +92,17 @@ const startPolling = () => {
       })
       if (res.data.code === 0 && res.data.data) {
         const taskResult = res.data.data.output
-        if (taskResult.taskStatus === 'SUCCESS') {
+        if (taskResult.taskStatus === 'SUCCEEDED') {
           message.success('扩图任务执行成功')
           resultImageUrl.value = taskResult?.outputImageUrl
+          //任务成功，清除轮询
+          clearPolling()
         } else if (taskResult.taskStatus === 'FAILED') {
-          message.error('扩图任务执行失败')
+          message.error('扩图任务执行失败：' + (taskResult?.message || '未知错误'))
+          //任务失败，清除轮询
+          clearPolling()
         }
-        //清除轮询
-        clearPolling()
+        // 其他状态（如 RUNNING/PENDING）继续轮询，不清除
       }
     } catch (error) {
       console.error('扩图任务轮询失败', error)
@@ -171,7 +174,7 @@ defineExpose({
   closeModal,
 })
 
-onMounted(() => {
+onUnmounted(() => {
   clearPolling()
 })
 </script>
