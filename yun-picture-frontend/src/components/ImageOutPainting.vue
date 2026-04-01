@@ -73,7 +73,7 @@ const createTask = async () => {
     //开启轮询
     startPolling()
   } else {
-    message.error('图片生成失败' + res.data.message)
+    message.error('扩图任务创建失败' + res.data.message)
   }
 }
 
@@ -102,10 +102,10 @@ const startPolling = () => {
         clearPolling()
       }
     } catch (error) {
+      console.error('扩图任务轮询失败', error)
       message.error('扩图任务失败失败' + error.message)
+      clearPolling()
     }
-    //开启轮询
-    startPolling()
   }, 3000)
 }
 
@@ -153,7 +153,7 @@ const handleUpload = async () => {
   }
 }
 
-const visible = ref<boolean>(true)
+const visible = ref<boolean>(false)
 
 // 打开弹窗
 const openModal = () => {
