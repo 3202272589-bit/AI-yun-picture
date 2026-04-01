@@ -20,13 +20,10 @@
     <div v-if="picture" class="edit-bar">
       <a-button :icon="h(EditOutlined)" @click="doEditPicture">编辑图片</a-button>
     </div>
-    <ImageCropper
-      ref="imageCropperRef"
-      :imageUrl="picture?.url"
-      :picture="picture"
-      :spaceId="spaceId"
-      :onSuccess="onCropSuccess"
-    />
+    <ImageCropper ref="imageCropperRef" :picture="picture" :onSuccess="onCropSuccess" />
+    <!-- 图片扩图组件 -->
+    <ImageOutPainting :picture="picture" :spaceId="spaceId" />
+
     <!-- 图片信息表单 -->
     <a-form
       v-if="picture"
@@ -80,6 +77,7 @@ import { listPictureTagCategoryUsingGet } from '@/api/pictureController'
 import UrlPictureUpload from '@/components/UrlPictureUpload.vue'
 import ImageCropper from '@/components/ImageCropper.vue'
 import { EditOutlined } from '@ant-design/icons-vue'
+import ImageOutPainting from '@/components/ImageOutPainting.vue'
 
 const picture = ref<API.PictureVO>()
 const pictureForm = reactive<API.PictureEditRequest>({})

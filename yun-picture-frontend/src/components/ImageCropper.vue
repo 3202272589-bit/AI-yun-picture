@@ -25,6 +25,7 @@
         <a-button @click="rotateRight">向右旋转</a-button>
         <a-button @click="changeScale(1)">放大</a-button>
         <a-button @click="changeScale(-1)">缩小</a-button>
+
         <a-button type="primary" :loading="loading" @click="handleConfirm">确认</a-button>
       </a-space>
     </div>
