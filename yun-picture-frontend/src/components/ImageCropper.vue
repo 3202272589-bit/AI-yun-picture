@@ -19,7 +19,7 @@
       />
     </div>
     <!-- 图片操作 -->
-    <div class="image-cropper-actions">
+    <div class="image-cropper-actions" style="margin-top: 16px">
       <a-space>
         <a-button @click="rotateLeft">向左旋转</a-button>
         <a-button @click="rotateRight">向右旋转</a-button>

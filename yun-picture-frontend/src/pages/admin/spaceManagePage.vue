@@ -5,6 +5,12 @@
       <div class="button-container">
         <a-space>
           <a-button type="primary" href="/add_space" target="blank">+ 创建空间</a-button>
+          <a-button type="primary" ghost href="/space_analyze?queryPublic=1" target="blank"
+            >分析公共图库</a-button
+          >
+          <a-button type="primary" ghost href="/space_analyze?queryAll=1" target="blank"
+            >分析全部空间</a-button
+          >
         </a-space>
       </div>
     </a-flex>
@@ -60,6 +66,9 @@
         }}</template>
         <template v-else-if="column.key === 'action'">
           <a-space wrap>
+            <router-link :to="{ path: '/space_analyze', query: { id: record.id } }">
+              <a-button type="link">分析</a-button>
+            </router-link>
             <router-link :to="{ path: '/add_space', query: { id: record.id } }">
               <a-button type="link">编辑</a-button>
             </router-link>
