@@ -17,7 +17,7 @@ import { getSpaceCategoryAnalyzeUsingPost } from '@/api/spaceAnalyzeController'
 interface Props {
   queryAll?: boolean
   queryPublic?: boolean
-  spaceId?: number
+  spaceId?: string | number
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 //图表数据
-const dataList = ref<API.SpaceCategoryAnalyzeResponse>({})
+const dataList = ref<API.SpaceCategoryAnalyzeResponse[]>([])
 
 //加载状态
 const loading = ref<boolean>(false)

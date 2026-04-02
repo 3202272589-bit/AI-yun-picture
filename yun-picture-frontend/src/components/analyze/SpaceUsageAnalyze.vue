@@ -31,7 +31,7 @@ import { getSpaceUsageAnalyzeUsingPost } from '@/api/spaceAnalyzeController'
 interface Props {
   queryAll?: boolean
   queryPublic?: boolean
-  spaceId?: number
+  spaceId?: string | number
 }
 
 const props = withDefaults(defineProps<Props>(), {

@@ -5,7 +5,7 @@
       <span v-if="queryAll"> 全部空间 </span>
       <span v-else-if="queryPublic"> 公共图库 </span>
       <span v-else>
-        <a :href="`/space/${spaceId}`" target="_blank">id：{{ spaceId }}</a>
+        <a v-if="spaceId" :href="`/space/${spaceId}`" target="_blank">id：{{ spaceId }}</a>
       </span>
     </h2>
     <a-row :gutter="[16, 16]">
@@ -51,12 +51,13 @@ import SpaceSizeAnalyze from '@/components/analyze/SpaceSizeAnalyze.vue'
 import SpaceRankAnalyze from '@/components/analyze/SpaceRankAnalyze.vue'
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
+import { useLoginUserStore } from '@/stores/useLoginUserStore'
 
 const route = useRoute()
 
 // 空间 id
 const spaceId = computed(() => {
-  return route.query?.spaceId as string
+  return route.query?.spaceId
 })
 
 // 是否查询所有空间
@@ -71,9 +72,8 @@ const queryPublic = computed(() => {
 
 //判断用户是否是管理员
 const loginUserStore = useLoginUserStore()
-const loginUser = loginUserStore.loginUser()
 const isAdmin = computed(() => {
-  return loginUser.userRole === 'admin'
+  return loginUserStore.loginUser.userRole === 'admin'
 })
 </script>
 <style scoped></style>
