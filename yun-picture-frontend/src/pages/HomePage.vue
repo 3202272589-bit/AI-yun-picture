@@ -1,7 +1,7 @@
 <template>
   <div id="homePage">
     <!-- 搜索框 -->
-    <div class="search-bar">
+    <div class="search-bar" style="padding-top: 24px">
       <a-input-search
         v-model:value="searchParams.searchText"
         placeholder="从海量图片中搜索"

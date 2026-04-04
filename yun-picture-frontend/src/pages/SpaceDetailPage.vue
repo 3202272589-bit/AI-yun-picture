@@ -9,12 +9,21 @@
         >
           {{ SPACE_LEVEL_MAP[space.spaceLevel] }}
         </a-tag>
-        <h2>{{ space.spaceName }} (个人空间)</h2>
+        <h2>{{ space.spaceName }} ({{ SPACE_TYPE_MAP[space.spaceType] }})</h2>
       </div>
       <a-space size="middle">
         <a-button type="primary" :href="`/add_picture?spaceId=${id}`" target="_blank"
           >+ 添加图片</a-button
         >
+        <a-button
+          type="primary"
+          ghost
+          :icon="h(TeamOutlined)"
+          :href="`/spaceUserManage/${id}`"
+          target="_blank"
+        >
+          成员管理
+        </a-button>
         <a-button
           type="primary"
           ghost
@@ -69,13 +78,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { message } from 'ant-design-vue'
 import { getSpaceVoByIdUsingGet } from '@/api/spaceController'
 import { listPictureVoByPageUsingPost } from '@/api/pictureController'
 import PictureList from '@/components/PictureList.vue'
 import { formatSize } from '@/utils/index'
-import { EditOutlined, BarChartOutlined } from '@ant-design/icons-vue'
+import { EditOutlined, BarChartOutlined, TeamOutlined } from '@ant-design/icons-vue'
 import { h } from 'vue'
 import { SPACE_LEVEL_MAP, SPACE_LEVEL_COLOR } from '@/constants/space'
 import PictureSearchForm from '@/components/PictureSearchForm.vue'
@@ -83,6 +92,7 @@ import BatchEditPictureModal from '@/components/BatchEditPictureModal.vue'
 import { searchPictureByColorUsingPost } from '@/api/pictureController'
 import { ColorPicker } from 'vue3-colorpicker'
 import 'vue3-colorpicker/style.css'
+import { SPACE_TYPE_MAP } from '@/constants/space'
 
 interface Props {
   id: string | number
@@ -181,6 +191,17 @@ const onColorChange = async (color: string) => {
 onMounted(() => {
   fetchData()
 })
+
+// 监听id变化，重新加载数据
+watch(
+  () => props.id,
+  (newId) => {
+    if (newId) {
+      fetchSpaceDetail()
+      fetchData()
+    }
+  },
+)
 
 //批量编辑图片
 const batchEditPictureModalRef = ref()

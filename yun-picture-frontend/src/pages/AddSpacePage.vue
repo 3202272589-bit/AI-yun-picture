@@ -1,6 +1,8 @@
 <template>
   <div id="addSpacePage">
-    <h2 style="margin-bottom: 16px">{{ space ? '编辑空间' : '创建空间' }}</h2>
+    <h2 style="margin-bottom: 16px">
+      {{ space ? '编辑空间' : '创建空间' }} {{ SPACE_TYPE_MAP[spaceType] }}
+    </h2>
     <!-- 空间信息表单 -->
     <a-form name="SpaceForm" layout="vertical" :model="spaceForm" @finish="handleSubmit">
       <a-form-item label="名称" name="spaceName">
@@ -38,18 +40,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import message from 'ant-design-vue/es/message'
 import { addSpaceUsingPost, getSpaceVoByIdUsingGet } from '@/api/spaceController'
 import { useRouter, useRoute } from 'vue-router'
 import { SPACE_LEVEL_OPTIONS, SPACE_LEVEL_COLOR, SPACE_LEVEL_MAP } from '@/constants/space'
 import { listSpaceLevelUsingGet, updateSpaceUsingPost } from '@/api/spaceController'
 import { formatSize } from '@/utils/index'
+import { SPACE_TYPE_ENUM, SPACE_TYPE_MAP, SPACE_TYPE_OPTIONS } from '@/constants/space'
 
 const space = ref<API.SpaceVO>()
 const spaceForm = reactive<API.SpaceAddRequest | API.SpaceEditRequest>({})
 const router = useRouter()
+
 const route = useRoute()
+//空间类别，默认为私有空间
+const spaceType = computed(() => {
+  if (route.query?.type) {
+    return Number(route.query.type)
+  } else {
+    return SPACE_TYPE_ENUM.PRIVATE
+  }
+})
+
 const loading = ref(false)
 const spaceLevelList = ref<API.SpaceLevel[]>([])
 
@@ -79,6 +92,7 @@ const handleSubmit = async (values: any) => {
   } else {
     //创建
     res = await addSpaceUsingPost({
+      spaceType: spaceType.value,
       ...spaceForm,
     })
   }
