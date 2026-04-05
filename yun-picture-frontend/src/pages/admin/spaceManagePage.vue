@@ -29,6 +29,14 @@
               allowClear
             />
           </a-form-item>
+          <a-form-item label="空间类型" name="spaceType" class="form-item">
+            <a-select
+              v-model:value="searchParams.spaceType"
+              placeholder="请选择空间类型"
+              :options="SPACE_TYPE_OPTIONS"
+              allowClear
+            />
+          </a-form-item>
           <a-form-item label="用户Id" class="form-item">
             <a-input v-model:value="searchParams.userId" placeholder="输入用户Id" allowClear />
           </a-form-item>
@@ -51,6 +59,13 @@
           <div>
             空间级别：<a-tag :color="SPACE_LEVEL_COLOR[record.spaceLevel]">{{
               SPACE_LEVEL_MAP[record.spaceLevel]
+            }}</a-tag>
+          </div>
+        </template>
+        <template v-if="column.dataIndex === 'spaceType'">
+          <div>
+            空间类型：<a-tag :color="SPACE_TYPE_COLOR[record.spaceType]">{{
+              SPACE_TYPE_MAP[record.spaceType]
             }}</a-tag>
           </div>
         </template>
@@ -85,7 +100,14 @@ import { listSpaceByPageUsingPost } from '@/api/spaceController'
 import { onMounted, ref, reactive, computed } from 'vue'
 import dayjs from 'dayjs'
 import { deleteSpaceUsingPost } from '@/api/spaceController'
-import { SPACE_LEVEL_MAP, SPACE_LEVEL_OPTIONS, SPACE_LEVEL_COLOR } from '@/constants/space'
+import {
+  SPACE_LEVEL_MAP,
+  SPACE_LEVEL_OPTIONS,
+  SPACE_LEVEL_COLOR,
+  SPACE_TYPE_MAP,
+  SPACE_TYPE_OPTIONS,
+  SPACE_TYPE_COLOR,
+} from '@/constants/space'
 import { formatSize } from '@/utils/index'
 
 const columns = [
@@ -103,8 +125,8 @@ const columns = [
     dataIndex: 'spaceLevel',
   },
   {
-    title: '使用情况',
-    dataIndex: 'spaceUseInfo',
+    title: '空间类型',
+    dataIndex: 'spaceType',
   },
   {
     title: '用户 id',

@@ -10,6 +10,7 @@ import { listSpaceVoByPageUsingPost } from '@/api/spaceController'
 import { message } from 'ant-design-vue'
 import { useLoginUserStore } from '@/stores/useLoginUserStore'
 import { onMounted } from 'vue'
+import { SPACE_TYPE_ENUM } from '@/constants/space'
 
 const loginUserStore = useLoginUserStore()
 
@@ -28,6 +29,7 @@ const checkUserSpace = async () => {
     userId: loginUser.id,
     current: 1,
     pageSize: 1,
+    spaceType: SPACE_TYPE_ENUM.PRIVATE,
   })
   if (res.data.code === 0) {
     //用户有个人空间

@@ -40,6 +40,12 @@ export const SPACE_TYPE_MAP: Record<number, string> = {
   1: '团队空间',
 }
 
+// 空间类型颜色映射
+export const SPACE_TYPE_COLOR: Record<number, string> = {
+  0: 'purple', // 私有空间 - 紫色
+  1: 'orange', // 团队空间 - 橙色
+}
+
 // 空间类型选项映射
 export const SPACE_TYPE_OPTIONS = Object.keys(SPACE_TYPE_MAP).map((key) => {
   const value = Number(key) // 将字符串 key 转换为数字
